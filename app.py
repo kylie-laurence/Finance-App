@@ -2,9 +2,26 @@ import streamlit as st
 import yfinance as yf
 import pandas as pd
 import numpy as np
+import qrcode
+from io import BytesIO
 
 st.title("📈 Individual Stock Analysis")
 
+# --- URL for QR code (update after deployment) ---
+APP_URL = "https://your-streamlit-app-url.com"
+
+# --- Generate QR Code ---
+def generate_qr(url):
+    qr = qrcode.make(url)
+    buffer = BytesIO()
+    qr.save(buffer, format="PNG")
+    return buffer
+
+st.subheader("📲 Scan to Open This App")
+qr_img = generate_qr(APP_URL)
+st.image(qr_img, width=200)
+
+# --- User Input ---
 ticker = st.text_input("Enter Stock Ticker:", "AAPL")
 
 if ticker:
